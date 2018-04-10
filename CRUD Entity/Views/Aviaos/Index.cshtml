@@ -1,0 +1,51 @@
+﻿@model IEnumerable<CRUD_Entity.Models.Aviao>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Aviões</h2>
+
+<p>
+    @Html.ActionLink("Registrar Novo Avião", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Pilotos.Nome)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Modelo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Marca)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Ano)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Pilotos.Nome)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Modelo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Marca)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Ano)
+        </td>
+        <td>
+            @Html.ActionLink("Editar", "Edit", new { id=item.IdAviao }) |
+            @Html.ActionLink("Detalhes", "Details", new { id=item.IdAviao }) |
+            @Html.ActionLink("Excluir", "Delete", new { id=item.IdAviao })
+        </td>
+    </tr>
+}
+
+</table>

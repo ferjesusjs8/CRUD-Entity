@@ -1,0 +1,50 @@
+﻿@model CRUD_Entity.Models.Aviao
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Detalhes do Avião</h2>
+
+<div>
+    <h4>Avião</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Pilotos.Nome)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Pilotos.Nome)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Modelo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Modelo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Marca)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Marca)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Ano)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Ano)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Editar", "Edit", new { id = Model.IdAviao }) |
+    @Html.ActionLink("Voltar a lista", "Index")
+</p>

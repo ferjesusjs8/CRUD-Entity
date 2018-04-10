@@ -1,0 +1,58 @@
+﻿@model CRUD_Entity.Models.Piloto
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Detalhes</h2>
+
+<div>
+    <h4>Piloto</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.RG)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RG)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NumeroLicenca)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NumeroLicenca)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CPFCNPJ)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CPFCNPJ)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Nome)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nome)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Sobrenome)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Sobrenome)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Editar", "Edit", new { id = Model.IdPiloto }) |
+    @Html.ActionLink("Voltar a lista", "Index")
+</p>
