@@ -13,6 +13,7 @@
     
     <div class="form-horizontal">
         <h4>Avião</h4>
+        <p style="color:red;">Antes de registrar um novo avião será primeiro necessário @Html.ActionLink("Registrar Piloto", "Index", "Pilotoes", new { id = 3 }, new { @class = "btn btn-primary" })</p>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
