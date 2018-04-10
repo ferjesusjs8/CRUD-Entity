@@ -16,8 +16,5 @@ namespace CRUD_Entity.Models
         public Piloto Pilotos { get; set; }
         public string Modelo { get; set; }
         public string Marca { get; set; }
-        [DisplayFormat(DataFormatString = "{0:yyyy}", ApplyFormatInEditMode = true)]
-        [DataType(DataType.Date)]
-        public DateTime Ano { get; set; }
     }
 }

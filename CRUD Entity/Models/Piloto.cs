@@ -15,9 +15,6 @@ namespace CRUD_Entity.Models
         public long CPFCNPJ { get; set; }
         public string Nome { get; set; }
         public string Sobrenome { get; set; }
-        [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}", ApplyFormatInEditMode = true)]
-        [DataType(DataType.Date)]
-        public DateTime DataNascimento { get; set; }
 
         public ICollection<Aviao> Avioes { get; set; }
     }
