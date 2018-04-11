@@ -12,11 +12,9 @@ namespace CRUD_Entity.Models
         [Key]
         [Required]
         public int IdAviao { get; set; }
-        [Required]
         [Display(Name = "Piloto")]
         [ForeignKey("Pilotos")]
         public int PilotoRefId { get; set; }
-        [Required]
         [Display(Name = "Piloto")]
         public Piloto Pilotos { get; set; }
         [Required]
