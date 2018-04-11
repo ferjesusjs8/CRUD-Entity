@@ -10,14 +10,21 @@ namespace CRUD_Entity.Models
     public class Aviao
     {
         [Key]
+        [Required]
         public int IdAviao { get; set; }
+        [Required]
+        [Display(Name = "Piloto")]
         [ForeignKey("Pilotos")]
         public int PilotoRefId { get; set; }
+        [Required]
+        [Display(Name = "Piloto")]
         public Piloto Pilotos { get; set; }
+        [Required]
+        [Display(Name = "Modelo")]
         public string Modelo { get; set; }
+        [Required]
+        [Display(Name = "Marca")]
         public string Marca { get; set; }
-        [DisplayFormat(DataFormatString = "{0:yyyy}", ApplyFormatInEditMode = true)]
-        [DataType(DataType.Date)]
-        public DateTime Ano { get; set; }
+
     }
 }

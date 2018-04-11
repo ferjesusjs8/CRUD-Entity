@@ -9,15 +9,23 @@ namespace CRUD_Entity.Models
     public class Piloto
     {
         [Key]
+        [Required]
         public int IdPiloto { get; set; }
+        [Required]
+        [Display(Name = "RG")]
         public int RG { get; set; }
+        [Required]
+        [Display(Name = "Número da Licença")]
         public int NumeroLicenca { get; set; }
+        [Required]
+        [Display(Name = "CPF / CNPJ")]
         public long CPFCNPJ { get; set; }
+        [Required]
+        [Display(Name = "Nome")]
         public string Nome { get; set; }
+        [Required]
+        [Display(Name = "Sobrenome")]
         public string Sobrenome { get; set; }
-        [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}", ApplyFormatInEditMode = true)]
-        [DataType(DataType.Date)]
-        public DateTime DataNascimento { get; set; }
 
         public ICollection<Aviao> Avioes { get; set; }
     }
