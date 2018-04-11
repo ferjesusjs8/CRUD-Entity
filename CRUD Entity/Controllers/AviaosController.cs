@@ -28,7 +28,7 @@ namespace CRUD_Entity.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Aviao aviao = db.Aviao.Include(a => a.Pilotos).FirstOrDefault(a => a.IdAviao.Equals(id.Value));
+            Aviao aviao = db.Aviao.Find(id);
             if (aviao == null)
             {
                 return HttpNotFound();
@@ -101,7 +101,7 @@ namespace CRUD_Entity.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Aviao aviao = db.Aviao.Include(a => a.Pilotos).FirstOrDefault(a => a.IdAviao.Equals(id.Value));
+            Aviao aviao = db.Aviao.Find(id);
             if (aviao == null)
             {
                 return HttpNotFound();
