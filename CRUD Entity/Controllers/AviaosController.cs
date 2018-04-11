@@ -48,7 +48,7 @@ namespace CRUD_Entity.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "IdAviao,PilotoRefId,Modelo,Marca,Ano")] Aviao aviao)
+        public ActionResult Create([Bind(Include = "IdAviao,PilotoRefId,Modelo,Marca")] Aviao aviao)
         {
             if (ModelState.IsValid)
             {

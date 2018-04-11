@@ -20,7 +20,7 @@
         <th>
             @Html.DisplayNameFor(model => model.Marca)
         </th>
-      <th></th>
+        <th></th>
     </tr>
 
 @foreach (var item in Model) {
@@ -34,6 +34,7 @@
         <td>
             @Html.DisplayFor(modelItem => item.Marca)
         </td>
+
         <td>
             @Html.ActionLink("Editar", "Edit", new { id=item.IdAviao }) |
             @Html.ActionLink("Detalhes", "Details", new { id=item.IdAviao }) |

@@ -18,7 +18,7 @@ namespace CRUD_Entity.Models
         [Display(Name = "Número da Licença")]
         public int NumeroLicenca { get; set; }
         [Required]
-        [Display(Name = "CPF / CNPJ")]
+        [Display(Name ="CPF / CNPJ")]
         public long CPFCNPJ { get; set; }
         [Required]
         [Display(Name = "Nome")]
