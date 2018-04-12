@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -12,14 +13,17 @@ namespace CRUD_Entity.Models
         [Required]
         public int IdPiloto { get; set; }
         [Required]
+        [StringLength(20, MinimumLength = 3, ErrorMessage = "Este campo deve conter no mínimo 3 caracteres e no máximo 20.")]
         [Display(Name = "RG")]
-        public int RG { get; set; }
+        public string RG { get; set; }
         [Required]
         [Display(Name = "Número da Licença")]
-        public int NumeroLicenca { get; set; }
+        [StringLength(16, MinimumLength = 6, ErrorMessage = "Este campo deve conter no mínimo 3 caracteres e no máximo 16.")]
+        public string NumeroLicenca { get; set; }
         [Required]
         [Display(Name ="CPF / CNPJ")]
-        public long CPFCNPJ { get; set; }
+        [StringLength(16, MinimumLength = 11, ErrorMessage = "Este campo deve conter no mínimo 3 caracteres e no máximo 16.")]
+        public string CPFCNPJ { get; set; }
         [Required]
         [Display(Name = "Nome")]
         public string Nome { get; set; }
