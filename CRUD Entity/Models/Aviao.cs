@@ -19,11 +19,11 @@ namespace CRUD_Entity.Models
         public Piloto Pilotos { get; set; }
         [Required]
         [Display(Name = "Modelo")]
-        [StringLength(20, MinimumLength = 3, ErrorMessage = "Este campo deve conter no mínimo 3 caracteres e no máximo 20.")]
+        [StringLength(30, MinimumLength = 3, ErrorMessage = "Este campo deve conter no mínimo 3 caracteres e no máximo 30.")]
         public string Modelo { get; set; }
         [Required]
         [Display(Name = "Marca")]
-        [StringLength(20, MinimumLength = 3, ErrorMessage = "Este campo deve conter no mínimo 3 caracteres e no máximo 20.")]
+        [StringLength(30, MinimumLength = 3, ErrorMessage = "Este campo deve conter no mínimo 3 caracteres e no máximo 30.")]
         public string Marca { get; set; }
 
     }
