@@ -15,11 +15,11 @@ namespace CRUD_Entity.Controllers
         private Context db = new Context();
 
         // GET: Aviaos
-        public ActionResult Index()
-        {
-            var aviao = db.Aviao.Include(a => a.Pilotos);
-            return View(aviao.ToList());
-        }
+        //public ActionResult Index()
+        //{
+        //    var aviao = db.Aviao.Include(a => a.Pilotos);
+        //    return View(aviao.ToList());
+        //}
 
         // GET: Aviaos/Details/5
         public ActionResult Details(int? id)
@@ -127,6 +127,31 @@ namespace CRUD_Entity.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+        public ActionResult Index(string sortOrder, string searchString)
+        {
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "Modelo" : "";
+            //ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
+            var pilotos = from s in db.Aviao
+                          select s;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                pilotos = pilotos.Where(s => s.Modelo.Contains(searchString)
+                                       || s.Marca.Contains(searchString));
+            }
+            switch (sortOrder)
+            {
+                case "Modelo":
+                    pilotos = pilotos.OrderByDescending(s => s.Modelo);
+                    break;
+                case "Marca":
+                    pilotos = pilotos.OrderBy(s => s.Marca);
+                    break;
+                default:
+                    pilotos = pilotos.OrderBy(s => s.Modelo);
+                    break;
+            }
+            return View(pilotos.ToList());
         }
     }
 }
