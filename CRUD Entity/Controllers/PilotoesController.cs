@@ -15,10 +15,10 @@ namespace CRUD_Entity.Controllers
         private Context db = new Context();
 
         // GET: Pilotoes
-        public ActionResult Index()
-        {
-            return View(db.Piloto.ToList());
-        }
+        //public ActionResult Index()
+        //{
+        //    return View(db.Piloto.ToList());
+        //}
 
         // GET: Pilotoes/Details/5
         public ActionResult Details(int? id)
@@ -122,6 +122,44 @@ namespace CRUD_Entity.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        public ActionResult Index(string sortOrder, string searchString)
+        {
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "Nome" : "";
+            //ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
+            var pilotos = from s in db.Piloto
+                           select s;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                pilotos = pilotos.Where(s => s.Nome.Contains(searchString)
+                                       || s.RG.Contains(searchString)
+                                       || s.NumeroLicenca.Contains(searchString)
+                                       || s.CPFCNPJ.Contains(searchString)
+                                       || s.Sobrenome.Contains(searchString));
+            }
+            switch (sortOrder)
+            {
+                case "Nome":
+                    pilotos = pilotos.OrderByDescending(s => s.Nome);
+                    break;
+                case "RG":
+                    pilotos = pilotos.OrderBy(s => s.RG);
+                    break;
+                case "NumeroLicenca":
+                    pilotos = pilotos.OrderByDescending(s => s.NumeroLicenca);
+                    break;
+                case "CPFCNPJ":
+                    pilotos = pilotos.OrderByDescending(s => s.CPFCNPJ);
+                    break;
+                case "Sobrenome":
+                    pilotos = pilotos.OrderByDescending(s => s.Sobrenome);
+                    break;
+                default:
+                    pilotos = pilotos.OrderBy(s => s.Nome);
+                    break;
+            }
+            return View(pilotos.ToList());
         }
     }
 }
