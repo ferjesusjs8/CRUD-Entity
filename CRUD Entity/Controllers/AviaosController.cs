@@ -50,12 +50,12 @@ namespace CRUD_Entity.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "IdAviao,PilotoRefId,Modelo,Marca")] Aviao aviao)
         {
-            if (ModelState.IsValid)
-            {
-                db.Aviao.Add(aviao);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+                if (ModelState.IsValid)
+                {
+                    db.Aviao.Add(aviao);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
 
             ViewBag.PilotoRefId = new SelectList(db.Piloto, "IdPiloto", "Nome", aviao.PilotoRefId);
             return View(aviao);
@@ -82,7 +82,7 @@ namespace CRUD_Entity.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "IdAviao,PilotoRefId,Modelo,Marca,Ano")] Aviao aviao)
+        public ActionResult Edit([Bind(Include = "IdAviao,PilotoRefId,Modelo,Marca")] Aviao aviao)
         {
             if (ModelState.IsValid)
             {
@@ -132,8 +132,9 @@ namespace CRUD_Entity.Controllers
         {
             ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "Modelo" : "";
             //ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
-            var pilotos = from s in db.Aviao
+            var pilotos = from s in db.Aviao.Include(o => o.Pilotos)
                           select s;
+
             if (!String.IsNullOrEmpty(searchString))
             {
                 pilotos = pilotos.Where(s => s.Modelo.Contains(searchString)
@@ -142,8 +143,8 @@ namespace CRUD_Entity.Controllers
             }
             switch (sortOrder)
             {
-                case "Nome do Piloto":
-                    pilotos = pilotos.OrderByDescending(s => s.PilotoRefId);
+                case "Piloto":
+                    pilotos = pilotos.OrderByDescending(s => s.Pilotos.Nome);
                     break;
                 case "Modelo":
                     pilotos = pilotos.OrderByDescending(s => s.Modelo);

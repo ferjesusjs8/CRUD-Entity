@@ -46,10 +46,11 @@ namespace CRUD_Entity.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "IdPiloto,Nome,RG,CPFCNPJ,DataNascimento,NumeroLicenca")] Piloto piloto)
+        public ActionResult Create([Bind(Include = "IdPiloto,Nome,RG,CPFCNPJ,DataNascimento,NumeroLicenca,Ativo")] Piloto piloto)
         {
             if (ModelState.IsValid)
             {
+                piloto.Ativo = true;
                 db.Piloto.Add(piloto);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -78,7 +79,7 @@ namespace CRUD_Entity.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "IdPiloto,Nome,RG,CPFCNPJ,DataNascimento,NumeroLicenca")] Piloto piloto)
+        public ActionResult Edit([Bind(Include = "IdPiloto,Nome,RG,CPFCNPJ,DataNascimento,NumeroLicenca,Ativo")] Piloto piloto)
         {
             if (ModelState.IsValid)
             {
@@ -110,7 +111,8 @@ namespace CRUD_Entity.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Piloto piloto = db.Piloto.Find(id);
-            db.Piloto.Remove(piloto);
+            piloto.Ativo = false;
+            db.Entry(piloto).State = EntityState.Modified;
             db.SaveChanges();
             return RedirectToAction("Index");
         }

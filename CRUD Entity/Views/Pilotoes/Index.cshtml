@@ -17,7 +17,7 @@
 <table class="table">
     <tr>
         <th>
-            @Html.ActionLink("ID do Piloto", "Index", new { sortOrder = ViewBag.NameSortParm })
+            @Html.ActionLink("ID", "Index", new { sortOrder = ViewBag.NameSortParm })
         </th>
 
         <th>
@@ -38,6 +38,10 @@
 
         <th>
             @Html.ActionLink("Número da Licença", "Index", new { sortOrder = ViewBag.NameSortParm })
+        </th>
+
+        <th>
+            @Html.ActionLink("Ativo?", "Index", new { sortOrder = ViewBag.NameSortParm })
         </th>
 
         <th></th>
@@ -67,6 +71,10 @@
 
         <td>
             @Html.DisplayFor(modelItem => item.NumeroLicenca)
+        </td>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.Ativo)
         </td>
 
         <td>

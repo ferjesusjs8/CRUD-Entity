@@ -37,6 +37,10 @@ namespace CRUD_Entity.Models
         [Display(Name = "Data de Nascimento")]
         public DateTime DataNascimento { get; set; }
 
+        [Required]
+        [Display(Name = "Ativo?")]
+        public bool Ativo { get; set; }
+
         public ICollection<Aviao> Avioes { get; set; }
     }
 }

@@ -16,7 +16,7 @@
 <table class="table">
     <tr>
         <th>
-            @Html.ActionLink("ID do Piloto", "Index", new { sortOrder = ViewBag.NameSortParm })
+            @Html.ActionLink("Piloto", "Index", new { sortOrder = ViewBag.NameSortParm })
         </th>
         <th>
             @Html.ActionLink("Modelo", "Index", new { sortOrder = ViewBag.NameSortParm })
@@ -30,7 +30,7 @@
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.PilotoRefId)
+                @Html.DisplayFor(modelItem => item.Pilotos.Nome)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Modelo)
