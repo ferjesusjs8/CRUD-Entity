@@ -18,11 +18,11 @@ namespace CRUD_Entity.Models
         public string RG { get; set; }
         [Required]
         [Display(Name = "Número da Licença")]
-        [StringLength(16, MinimumLength = 6, ErrorMessage = "Este campo deve conter no mínimo 3 caracteres e no máximo 16.")]
+        [StringLength(16, MinimumLength = 6, ErrorMessage = "Este campo deve conter no mínimo 6 caracteres e no máximo 16.")]
         public string NumeroLicenca { get; set; }
         [Required]
         [Display(Name ="CPF / CNPJ")]
-        [StringLength(16, MinimumLength = 11, ErrorMessage = "Este campo deve conter no mínimo 3 caracteres e no máximo 16.")]
+        [StringLength(16, MinimumLength = 11, ErrorMessage = "Este campo deve conter no mínimo 11 caracteres e no máximo 16.")]
         public string CPFCNPJ { get; set; }
         [Required]
         [Display(Name = "Nome")]
