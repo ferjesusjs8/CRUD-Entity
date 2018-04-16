@@ -19,6 +19,13 @@
         <th>
             @Html.ActionLink("ID do Piloto", "Index", new { sortOrder = ViewBag.NameSortParm })
         </th>
+
+        <th>
+            @Html.ActionLink("Nome", "Index", new { sortOrder = ViewBag.NameSortParm })
+        </th>
+        <th>
+            @Html.ActionLink("Sobrenome", "Index", new { sortOrder = ViewBag.NameSortParm })
+        </th>
         <th>
             @Html.ActionLink("RG", "Index", new { sortOrder = ViewBag.NameSortParm })
         </th>
@@ -28,12 +35,6 @@
         <th>
             @Html.ActionLink("CPF / CNPJ", "Index", new { sortOrder = ViewBag.NameSortParm })
         </th>
-        <th>
-            @Html.ActionLink("Nome", "Index", new { sortOrder = ViewBag.NameSortParm })
-        </th>
-        <th>
-            @Html.ActionLink("Sobrenome", "Index", new { sortOrder = ViewBag.NameSortParm })
-        </th>
         <th></th>
     </tr>
     @foreach (var item in Model)
@@ -41,6 +42,13 @@
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.IdPiloto)
+        </td>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.Nome)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Sobrenome)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.RG)
@@ -50,12 +58,6 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.CPFCNPJ)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Nome)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Sobrenome)
         </td>
         <td>
             @Html.ActionLink("Editar", "Edit", new { id = item.IdPiloto }) |
