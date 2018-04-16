@@ -46,7 +46,7 @@ namespace CRUD_Entity.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "IdPiloto,RG,NumeroLicenca,CPFCNPJ,Nome,Sobrenome")] Piloto piloto)
+        public ActionResult Create([Bind(Include = "IdPiloto,Nome,RG,CPFCNPJ,DataNascimento,NumeroLicenca")] Piloto piloto)
         {
             if (ModelState.IsValid)
             {
@@ -78,7 +78,7 @@ namespace CRUD_Entity.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "IdPiloto,RG,NumeroLicenca,CPFCNPJ,Nome,Sobrenome")] Piloto piloto)
+        public ActionResult Edit([Bind(Include = "IdPiloto,Nome,RG,CPFCNPJ,DataNascimento,NumeroLicenca")] Piloto piloto)
         {
             if (ModelState.IsValid)
             {
@@ -135,28 +135,32 @@ namespace CRUD_Entity.Controllers
                 pilotos = pilotos.Where(s => s.Nome.Contains(searchString)
                                        || s.RG.Contains(searchString)
                                        || s.NumeroLicenca.Contains(searchString)
-                                       || s.CPFCNPJ.Contains(searchString)
-                                       || s.Sobrenome.Contains(searchString));
+                                       || s.CPFCNPJ.Contains(searchString));
             }
             switch (sortOrder)
             {
                 case "Nome":
                     pilotos = pilotos.OrderByDescending(s => s.Nome);
                     break;
+
                 case "RG":
                     pilotos = pilotos.OrderBy(s => s.RG);
                     break;
-                case "NumeroLicenca":
-                    pilotos = pilotos.OrderByDescending(s => s.NumeroLicenca);
-                    break;
+
                 case "CPFCNPJ":
                     pilotos = pilotos.OrderByDescending(s => s.CPFCNPJ);
                     break;
-                case "Sobrenome":
-                    pilotos = pilotos.OrderByDescending(s => s.Sobrenome);
+
+                case "DataNascimento":
+                    pilotos = pilotos.OrderByDescending(s => s.DataNascimento);
                     break;
+
+                case "NumeroLicenca":
+                    pilotos = pilotos.OrderByDescending(s => s.NumeroLicenca);
+                    break;
+
                 default:
-                    pilotos = pilotos.OrderBy(s => s.Nome);
+                    pilotos = pilotos.OrderBy(s => s.IdPiloto);
                     break;
             }
             return View(pilotos.ToList());
