@@ -161,10 +161,5 @@ namespace CRUD_Entity.Controllers
             }
             return View(pilotos.ToList());
         }
-
-        private object GetIdPiloto(Piloto s)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
