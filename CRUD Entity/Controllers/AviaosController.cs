@@ -148,7 +148,9 @@ namespace CRUD_Entity.Controllers
         }
         public ActionResult Index(string sortOrder, string searchString)
         {
-            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "Modelo" : "";
+            ViewBag.ModeloSortParm = sortOrder == "Modelo" ? "ModeloDesc" : "Modelo";
+            ViewBag.PilotoSortParm = sortOrder == "Piloto" ? "PilotoDesc" : "Piloto";
+            ViewBag.MarcaSortParm = sortOrder == "Marca" ? "MarcaDesc" : "Marca";
             //ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
             var pilotos = from s in db.Aviao.Include(o => o.Pilotos)
                           select s;
@@ -161,15 +163,30 @@ namespace CRUD_Entity.Controllers
             }
             switch (sortOrder)
             {
-                case "Piloto":
+                case "PilotoDesc":
                     pilotos = pilotos.OrderByDescending(s => s.Pilotos.Nome);
                     break;
+
+                case "Piloto":
+                    pilotos = pilotos.OrderBy(s => s.Pilotos.Nome);
+                    break;
+
                 case "Modelo":
                     pilotos = pilotos.OrderByDescending(s => s.Modelo);
                     break;
+
+                case "ModeloDesc":
+                    pilotos = pilotos.OrderBy(s => s.Modelo);
+                    break;
+
                 case "Marca":
+                    pilotos = pilotos.OrderByDescending(s => s.Marca);
+                    break;
+
+                case "MarcaDesc":
                     pilotos = pilotos.OrderBy(s => s.Marca);
                     break;
+
                 default:
                     pilotos = pilotos.OrderBy(s => s.Modelo);
                     break;

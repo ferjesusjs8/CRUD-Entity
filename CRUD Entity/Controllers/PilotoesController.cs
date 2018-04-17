@@ -128,7 +128,13 @@ namespace CRUD_Entity.Controllers
 
         public ActionResult Index(string sortOrder, string searchString)
         {
-            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "Nome" : "";
+            ViewBag.NomeSortParm = sortOrder == "Nome" ? "NomeDesc" : "Nome";
+            ViewBag.RGSortParm = sortOrder == "RG" ? "RGDesc" : "RG";
+            ViewBag.CPFSortParm = sortOrder == "CPFCNPJ" ? "CPFCNPJDesc" : "CPFCNPJ";
+            ViewBag.LicencaSortParm = sortOrder == "NumeroLicenca" ? "NumeroLicencaDesc" : "NumeroLicenca";
+            ViewBag.DataSortParm = sortOrder == "DataNascimento" ? "DataNascimentoDesc" : "DataNascimento";
+            ViewBag.IdSortParm = sortOrder == "Id" ? "IdDesc" : "Id";
+            ViewBag.AtivoSortParm = sortOrder == "Ativo" ? "AtivoDesc" : "Ativo";
             //ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
             var pilotos = from s in db.Piloto
                            select s;
@@ -141,24 +147,60 @@ namespace CRUD_Entity.Controllers
             }
             switch (sortOrder)
             {
-                case "Nome":
+                case "NomeDesc":
                     pilotos = pilotos.OrderByDescending(s => s.Nome);
+                    break;
+
+                case "Nome":
+                    pilotos = pilotos.OrderBy(s => s.Nome);
+                    break;
+
+                case "RGDesc":
+                    pilotos = pilotos.OrderByDescending(s => s.RG);
                     break;
 
                 case "RG":
                     pilotos = pilotos.OrderBy(s => s.RG);
                     break;
 
-                case "CPFCNPJ":
+                case "CPFCNPJDesc":
                     pilotos = pilotos.OrderByDescending(s => s.CPFCNPJ);
                     break;
 
-                case "DataNascimento":
+                case "CPFCNPJ":
+                    pilotos = pilotos.OrderBy(s => s.CPFCNPJ);
+                    break;
+
+                case "DataNascimentoDesc":
                     pilotos = pilotos.OrderByDescending(s => s.DataNascimento);
                     break;
 
-                case "NumeroLicenca":
+                case "DataNascimento":
+                    pilotos = pilotos.OrderBy(s => s.DataNascimento);
+                    break;
+
+                case "NumeroLicencaDesc":
                     pilotos = pilotos.OrderByDescending(s => s.NumeroLicenca);
+                    break;
+
+                case "NumeroLicenca":
+                    pilotos = pilotos.OrderBy(s => s.NumeroLicenca);
+                    break;
+
+                case "IdDesc":
+                    pilotos = pilotos.OrderByDescending(s => s.IdPiloto);
+                    break;
+
+                case "Id":
+                    pilotos = pilotos.OrderBy(s => s.IdPiloto);
+                    break;
+
+                case "AtivoDesc":
+                    pilotos = pilotos.OrderByDescending(s => s.Ativo);
+                    break;
+
+                case "Ativo":
+                    pilotos = pilotos.OrderBy(s => s.Ativo);
                     break;
 
                 default:

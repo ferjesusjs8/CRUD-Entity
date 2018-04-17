@@ -35,6 +35,7 @@ namespace CRUD_Entity.Models
 
         [Required]
         [Display(Name = "Data de Nascimento")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime DataNascimento { get; set; }
 
         [Required]
