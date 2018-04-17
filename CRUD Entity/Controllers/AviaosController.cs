@@ -90,7 +90,7 @@ namespace CRUD_Entity.Controllers
 
             ViewBag.Piloto = dropPilotos;
 
-            return View();
+            return View(aviao);
             //ViewBag.PilotoRefId = new SelectList(db.Piloto, "IdPiloto", "Nome", aviao.PilotoRefId);
             //return View(aviao);
         }
