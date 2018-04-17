@@ -80,8 +80,19 @@ namespace CRUD_Entity.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.PilotoRefId = new SelectList(db.Piloto, "IdPiloto", "Nome", aviao.PilotoRefId);
-            return View(aviao);
+
+            var dropPilotos = new List<SelectListItem>();
+
+            foreach (var piloto in db.Piloto.Where(o => o.Ativo).ToList())
+                dropPilotos.Add(new SelectListItem { Text = piloto.Nome, Value = piloto.IdPiloto.ToString() });
+
+            dropPilotos.Add(new SelectListItem { Text = "Selecione...", Selected = true });
+
+            ViewBag.Piloto = dropPilotos;
+
+            return View();
+            //ViewBag.PilotoRefId = new SelectList(db.Piloto, "IdPiloto", "Nome", aviao.PilotoRefId);
+            //return View(aviao);
         }
 
         // POST: Aviaos/Edit/5
