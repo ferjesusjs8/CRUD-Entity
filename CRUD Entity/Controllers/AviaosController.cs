@@ -39,7 +39,15 @@ namespace CRUD_Entity.Controllers
         // GET: Aviaos/Create
         public ActionResult Create()
         {
-            ViewBag.PilotoRefId = new SelectList(db.Piloto, "IdPiloto", "Nome");
+            var dropPilotos = new List<SelectListItem>();
+
+            foreach (var piloto in db.Piloto.Where(o => o.Ativo).ToList())
+                dropPilotos.Add(new SelectListItem { Text = piloto.Nome, Value = piloto.IdPiloto.ToString() });
+
+            dropPilotos.Add(new SelectListItem { Text = "Selecione...", Selected = true });
+
+            ViewBag.Piloto = dropPilotos;
+
             return View();
         }
 
@@ -55,9 +63,8 @@ namespace CRUD_Entity.Controllers
                     db.Aviao.Add(aviao);
                     db.SaveChanges();
                     return RedirectToAction("Index");
-                }
+                }            
 
-            ViewBag.PilotoRefId = new SelectList(db.Piloto, "IdPiloto", "Nome", aviao.PilotoRefId);
             return View(aviao);
         }
 
