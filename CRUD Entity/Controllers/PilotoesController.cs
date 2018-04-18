@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using CRUD_Entity.Models;
+using PagedList;
 
 namespace CRUD_Entity.Controllers
 {
@@ -126,7 +127,7 @@ namespace CRUD_Entity.Controllers
             base.Dispose(disposing);
         }
 
-        public ActionResult Index(string sortOrder, string searchString)
+        public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
             ViewBag.NomeSortParm = sortOrder == "Nome" ? "NomeDesc" : "Nome";
             ViewBag.RGSortParm = sortOrder == "RG" ? "RGDesc" : "RG";
@@ -136,8 +137,21 @@ namespace CRUD_Entity.Controllers
             ViewBag.IdSortParm = sortOrder == "Id" ? "IdDesc" : "Id";
             ViewBag.AtivoSortParm = sortOrder == "Ativo" ? "AtivoDesc" : "Ativo";
             //ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
+
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewBag.CurrentFilter = searchString;
+
             var pilotos = from s in db.Piloto
                            select s;
+
             if (!String.IsNullOrEmpty(searchString))
             {
                 pilotos = pilotos.Where(s => s.Nome.Contains(searchString)
@@ -207,7 +221,10 @@ namespace CRUD_Entity.Controllers
                     pilotos = pilotos.OrderBy(s => s.IdPiloto);
                     break;
             }
-            return View(pilotos.ToList());
+
+            int pageSize = 10;
+            int pageNumber = (page ?? 1);
+            return View(pilotos.ToPagedList(pageNumber, pageSize));
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿@model IEnumerable<CRUD_Entity.Models.Piloto>
+﻿@using PagedList.Mvc;
+@model PagedList.IPagedList<CRUD_Entity.Models.Piloto>
+
 @{
     ViewBag.Title = "Index";
 }
@@ -6,7 +8,7 @@
 <p>
     @Html.ActionLink("Registrar novo piloto", "Create")
 </p>
-@using (Html.BeginForm())
+@using (Html.BeginForm("Index", "Aluno", FormMethod.Get))
 {
     <p>
         Procurar: @Html.TextBox("SearchString")
@@ -85,3 +87,7 @@
     </tr>
     }
 </table>
+
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter}))
