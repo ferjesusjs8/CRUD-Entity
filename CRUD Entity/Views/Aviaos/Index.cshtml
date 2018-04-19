@@ -1,48 +1,87 @@
-﻿@model IEnumerable<CRUD_Entity.Models.Aviao>
+﻿@using PagedList.Mvc;
+@model PagedList.IPagedList<CRUD_Entity.Models.Aviao>
+
 @{
     ViewBag.Title = "Index";
 }
+
 <h2>Aviões</h2>
+
 <p>
     @Html.ActionLink("Registrar Novo Avião", "Create")
 </p>
+
 @using (Html.BeginForm())
+
 {
     <p>
         Procurar: @Html.TextBox("SearchString")
         <input type="submit" value="Pesquisar" />
     </p>
 }
+
 <table class="table">
     <tr>
+
         <th>
-            @Html.ActionLink("Piloto", "Index", new { sortOrder = ViewBag.PilotoSortParm })
+            @Html.ActionLink("ID do Avião", "Index", new { sortOrder = ViewBag.IDSortParm })
         </th>
+
         <th>
-            @Html.ActionLink("Modelo", "Index", new { sortOrder = ViewBag.ModeloSortParm })
+            @Html.ActionLink("Marca do Avião", "Index", new { sortOrder = ViewBag.ModeloSortParm })
         </th>
+
         <th>
-            @Html.ActionLink("Marca", "Index", new { sortOrder = ViewBag.MarcaSortParm })
+            @Html.ActionLink("Modelo", "Index", new { sortOrder = ViewBag.MarcaSortParm })
         </th>
+
+        <th>
+            @Html.ActionLink("Ano", "Index", new { sortOrder = ViewBag.AnoSortParm })
+        </th>
+
+        <th>
+            @Html.ActionLink("Piloto Responsável", "Index", new { sortOrder = ViewBag.PilotoSortParm })
+        </th>
+
         <th></th>
+
     </tr>
+
     @foreach (var item in Model)
     {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Pilotos.Nome)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Modelo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Marca)
-            </td>
-            <td>
-                @Html.ActionLink("Editar", "Edit", new { id = item.IdAviao }) |
-                @Html.ActionLink("Detalhes", "Details", new { id = item.IdAviao }) |
-                @Html.ActionLink("Excluir", "Delete", new { id = item.IdAviao })
-            </td>
-        </tr>
+    <tr>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.IdAviao)
+        </td>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.Marca)
+        </td>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.Modelo)
+        </td>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.Ano)
+        </td>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.Pilotos.Nome)
+        </td>
+
+        <td>
+            @Html.ActionLink("Editar", "Edit", new { id = item.IdAviao }) |
+            @Html.ActionLink("Detalhes", "Details", new { id = item.IdAviao }) |
+            @Html.ActionLink("Excluir", "Delete", new { id = item.IdAviao })
+        </td>
+
+    </tr>
+
     }
+
 </table>
+
+Página @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) de @Model.PageCount
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))

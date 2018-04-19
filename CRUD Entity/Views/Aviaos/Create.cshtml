@@ -22,14 +22,30 @@
         <p style="color:red;">Antes de registrar um novo avião será primeiro necessário @Html.ActionLink("Registrar Piloto", "Index", "Pilotoes", new { id = 3 }, new { @class = "btn btn-primary" })</p>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+@* ====================================================================================================================================== *@
+       
+        @* == PILOTO == *@
+        
         <div class="form-group">
             @Html.LabelFor(model => model.PilotoRefId, "Piloto", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("PilotoRefId", pilotos, htmlAttributes: new { @class = "form-control" })
-                @*@Html.DropDownListFor(x => x.CategoryId, new SelectList(Model.Categories, "Id", "Name"), "--Select--", new { @class = "form-control" })*@
                 @Html.ValidationMessageFor(model => model.PilotoRefId, "", new { @class = "text-danger" })
             </div>
         </div>
+
+        @* == MARCA == *@
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Marca, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Marca, new { htmlAttributes = new { @maxlength = "30", @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Marca, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        @* == MODELO == *@
 
         <div class="form-group">
             @Html.LabelFor(model => model.Modelo, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -39,13 +55,17 @@
             </div>
         </div>
 
+        @* == ANO == *@
+
         <div class="form-group">
-            @Html.LabelFor(model => model.Marca, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Ano, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Marca, new { htmlAttributes = new { @maxlength = "30", @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Marca, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.Ano, new { htmlAttributes = new { @min = "1500", @max = "9999", @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Ano, "", new { @class = "text-danger" })
             </div>
         </div>
+
+@* ====================================================================================================================================== *@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">

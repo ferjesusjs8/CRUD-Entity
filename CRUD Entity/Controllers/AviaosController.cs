@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using CRUD_Entity.Models;
+using PagedList;
 
 namespace CRUD_Entity.Controllers
 {
@@ -14,14 +15,8 @@ namespace CRUD_Entity.Controllers
     {
         private Context db = new Context();
 
-        // GET: Aviaos
-        //public ActionResult Index()
-        //{
-        //    var aviao = db.Aviao.Include(a => a.Pilotos);
-        //    return View(aviao.ToList());
-        //}
+        // == DETALHES ==
 
-        // GET: Aviaos/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -36,7 +31,8 @@ namespace CRUD_Entity.Controllers
             return View(aviao);
         }
 
-        // GET: Aviaos/Create
+        // == CREATE ==
+
         public ActionResult Create()
         {
             var dropPilotos = new List<SelectListItem>();
@@ -51,12 +47,11 @@ namespace CRUD_Entity.Controllers
             return View();
         }
 
-        // POST: Aviaos/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        // == CREATE POST ==
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "IdAviao,PilotoRefId,Modelo,Marca")] Aviao aviao)
+        public ActionResult Create([Bind(Include = "IdAviao,PilotoRefId,Marca,Modelo,Ano")] Aviao aviao)
         {
                 if (ModelState.IsValid)
                 {
@@ -68,7 +63,7 @@ namespace CRUD_Entity.Controllers
             return View(aviao);
         }
 
-        // GET: Aviaos/Edit/5
+        // == EDIT ==
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -91,16 +86,14 @@ namespace CRUD_Entity.Controllers
             ViewBag.Piloto = dropPilotos;
 
             return View(aviao);
-            //ViewBag.PilotoRefId = new SelectList(db.Piloto, "IdPiloto", "Nome", aviao.PilotoRefId);
-            //return View(aviao);
+
         }
 
-        // POST: Aviaos/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        // == EDIT POST ==
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "IdAviao,PilotoRefId,Modelo,Marca")] Aviao aviao)
+        public ActionResult Edit([Bind(Include = "IdAviao,PilotoRefId,Marca,Modelo,Ano")] Aviao aviao)
         {
             if (ModelState.IsValid)
             {
@@ -112,7 +105,8 @@ namespace CRUD_Entity.Controllers
             return View(aviao);
         }
 
-        // GET: Aviaos/Delete/5
+        // == DELETE ==
+
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -127,7 +121,8 @@ namespace CRUD_Entity.Controllers
             return View(aviao);
         }
 
-        // POST: Aviaos/Delete/5
+        // == DELETE POST ==
+
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
@@ -146,52 +141,89 @@ namespace CRUD_Entity.Controllers
             }
             base.Dispose(disposing);
         }
-        public ActionResult Index(string sortOrder, string searchString)
+
+        // == INDEX ==
+
+        public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
+            ViewBag.IDSortParm = sortOrder == "ID" ? "IDDesc" : "ID";
             ViewBag.ModeloSortParm = sortOrder == "Modelo" ? "ModeloDesc" : "Modelo";
             ViewBag.PilotoSortParm = sortOrder == "Piloto" ? "PilotoDesc" : "Piloto";
             ViewBag.MarcaSortParm = sortOrder == "Marca" ? "MarcaDesc" : "Marca";
-            //ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
-            var pilotos = from s in db.Aviao.Include(o => o.Pilotos)
+            ViewBag.AnoSortParm = sortOrder == "Ano" ? "AnoDesc" : "Ano";
+
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewBag.CurrentFilter = searchString;
+
+            var avioes = from s in db.Aviao.Include(o => o.Pilotos)
                           select s;
 
             if (!String.IsNullOrEmpty(searchString))
             {
-                pilotos = pilotos.Where(s => s.Modelo.Contains(searchString)
+                avioes = avioes.Where(s => s.Modelo.Contains(searchString)
                                        || s.Marca.Contains(searchString) 
                                        || s.Pilotos.Nome.Contains(searchString));
             }
+
             switch (sortOrder)
             {
+
+                case "IDDesc":
+                    avioes = avioes.OrderByDescending(s => s.IdAviao);
+                    break;
+
+                case "ID":
+                    avioes = avioes.OrderBy(s => s.IdAviao);
+                    break;
+
                 case "PilotoDesc":
-                    pilotos = pilotos.OrderByDescending(s => s.Pilotos.Nome);
+                    avioes = avioes.OrderByDescending(s => s.Pilotos.Nome);
                     break;
 
                 case "Piloto":
-                    pilotos = pilotos.OrderBy(s => s.Pilotos.Nome);
+                    avioes = avioes.OrderBy(s => s.Pilotos.Nome);
                     break;
 
                 case "Modelo":
-                    pilotos = pilotos.OrderByDescending(s => s.Modelo);
+                    avioes = avioes.OrderByDescending(s => s.Modelo);
                     break;
 
                 case "ModeloDesc":
-                    pilotos = pilotos.OrderBy(s => s.Modelo);
+                    avioes = avioes.OrderBy(s => s.Modelo);
                     break;
 
                 case "Marca":
-                    pilotos = pilotos.OrderByDescending(s => s.Marca);
+                    avioes = avioes.OrderByDescending(s => s.Marca);
                     break;
 
                 case "MarcaDesc":
-                    pilotos = pilotos.OrderBy(s => s.Marca);
+                    avioes = avioes.OrderBy(s => s.Marca);
+                    break;
+
+                case "Ano":
+                    avioes = avioes.OrderByDescending(s => s.Marca);
+                    break;
+
+                case "AnoDesc":
+                    avioes = avioes.OrderBy(s => s.Marca);
                     break;
 
                 default:
-                    pilotos = pilotos.OrderBy(s => s.Modelo);
+                    avioes = avioes.OrderBy(s => s.IdAviao);
                     break;
             }
-            return View(pilotos.ToList());
+
+            int pageSize = 5;
+            int pageNumber = (page ?? 1);
+            return View(avioes.ToPagedList(pageNumber, pageSize));
         }
     }
 }
