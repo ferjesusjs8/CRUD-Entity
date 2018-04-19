@@ -34,9 +34,8 @@ namespace CRUD_Entity.Models
         public string Nome { get; set; }
 
         [Required]
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
-        public DateTime DataNascimento { get; set; }
+        [Display(Name = "Data de Nascimento")]
+        public string DataNascimento { get; set; }
 
         [Required]
         [Display(Name = "Ativo?")]

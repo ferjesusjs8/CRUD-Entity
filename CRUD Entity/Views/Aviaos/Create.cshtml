@@ -25,16 +25,6 @@
 
 @* ====================================================================================================================================== *@
        
-        @* == PILOTO == *@
-        
-        <div class="form-group">
-            @Html.LabelFor(model => model.PilotoRefId, "Piloto", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("PilotoRefId", pilotos, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.PilotoRefId, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
         @* == MARCA == *@
 
         <div class="form-group">
@@ -60,8 +50,18 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Ano, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Ano, new { htmlAttributes = new { @min = "1500", @max = "9999", @class = "form-control" } })
+                @Html.EditorFor(model => model.Ano, new { htmlAttributes = new { @maxlength = "4", @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Ano, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        @* == PILOTO == *@
+        
+        <div class="form-group">
+            @Html.LabelFor(model => model.PilotoRefId, "Piloto", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("PilotoRefId", pilotos, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.PilotoRefId, "", new { @class = "text-danger" })
             </div>
         </div>
 

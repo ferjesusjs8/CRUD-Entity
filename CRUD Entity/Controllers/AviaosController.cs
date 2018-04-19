@@ -15,7 +15,7 @@ namespace CRUD_Entity.Controllers
     {
         private Context db = new Context();
 
-        // == DETALHES ==
+        #region Details        
 
         public ActionResult Details(int? id)
         {
@@ -31,27 +31,31 @@ namespace CRUD_Entity.Controllers
             return View(aviao);
         }
 
-        // == CREATE ==
+        #endregion
+
+        #region Create
 
         public ActionResult Create()
         {
             var dropPilotos = new List<SelectListItem>();
 
-            foreach (var piloto in db.Piloto.Where(o => o.Ativo).ToList())
-                dropPilotos.Add(new SelectListItem { Text = piloto.Nome, Value = piloto.IdPiloto.ToString() });
-
             dropPilotos.Add(new SelectListItem { Text = "Selecione...", Selected = true });
+
+            foreach (var piloto in db.Piloto.Where(o => o.Ativo).OrderBy(o => o.Nome).ToList())
+                dropPilotos.Add(new SelectListItem { Text = piloto.Nome, Value = piloto.IdPiloto.ToString() });
 
             ViewBag.Piloto = dropPilotos;
 
             return View();
         }
 
-        // == CREATE POST ==
+        #endregion
+
+        #region Create Post
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "IdAviao,PilotoRefId,Marca,Modelo,Ano")] Aviao aviao)
+        public ActionResult Create([Bind(Include = "IdAviao,Marca,Modelo,Ano,PilotoRefId")] Aviao aviao)
         {
                 if (ModelState.IsValid)
                 {
@@ -63,7 +67,10 @@ namespace CRUD_Entity.Controllers
             return View(aviao);
         }
 
-        // == EDIT ==
+        #endregion
+
+        #region Edit
+
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -78,10 +85,10 @@ namespace CRUD_Entity.Controllers
 
             var dropPilotos = new List<SelectListItem>();
 
-            foreach (var piloto in db.Piloto.Where(o => o.Ativo).ToList())
-                dropPilotos.Add(new SelectListItem { Text = piloto.Nome, Value = piloto.IdPiloto.ToString() });
-
             dropPilotos.Add(new SelectListItem { Text = "Selecione...", Selected = true });
+
+            foreach (var piloto in db.Piloto.Where(o => o.Ativo).OrderBy(o => o.Nome).ToList())
+                dropPilotos.Add(new SelectListItem { Text = piloto.Nome, Value = piloto.IdPiloto.ToString() });
 
             ViewBag.Piloto = dropPilotos;
 
@@ -89,11 +96,12 @@ namespace CRUD_Entity.Controllers
 
         }
 
-        // == EDIT POST ==
+        #endregion
 
+        #region Edit Post
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "IdAviao,PilotoRefId,Marca,Modelo,Ano")] Aviao aviao)
+        public ActionResult Edit([Bind(Include = "IdAviao,Marca,Modelo,Ano,PilotoRefId")] Aviao aviao)
         {
             if (ModelState.IsValid)
             {
@@ -105,7 +113,9 @@ namespace CRUD_Entity.Controllers
             return View(aviao);
         }
 
-        // == DELETE ==
+        #endregion
+
+        #region Delete
 
         public ActionResult Delete(int? id)
         {
@@ -121,7 +131,9 @@ namespace CRUD_Entity.Controllers
             return View(aviao);
         }
 
-        // == DELETE POST ==
+        #endregion
+
+        #region DeleteConfirmed
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
@@ -133,6 +145,10 @@ namespace CRUD_Entity.Controllers
             return RedirectToAction("Index");
         }
 
+        #endregion
+
+        #region Dispose
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -142,7 +158,9 @@ namespace CRUD_Entity.Controllers
             base.Dispose(disposing);
         }
 
-        // == INDEX ==
+        #endregion
+
+        #region Index
 
         public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
@@ -170,7 +188,8 @@ namespace CRUD_Entity.Controllers
             {
                 avioes = avioes.Where(s => s.Modelo.Contains(searchString)
                                        || s.Marca.Contains(searchString) 
-                                       || s.Pilotos.Nome.Contains(searchString));
+                                       || s.Pilotos.Nome.Contains(searchString)
+                                       || s.Ano.ToString().Contains(searchString));
             }
 
             switch (sortOrder)
@@ -225,5 +244,7 @@ namespace CRUD_Entity.Controllers
             int pageNumber = (page ?? 1);
             return View(avioes.ToPagedList(pageNumber, pageSize));
         }
+
+        #endregion
     }
 }

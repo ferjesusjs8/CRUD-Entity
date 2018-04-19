@@ -54,7 +54,7 @@
     <div class="form-group">
         @Html.Label("Data de Nascimento:", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.TextBoxFor(m => m.DataNascimento, new { htmlAttributes = new { @class = "form-control", @type = "datetime" } })
+            @Html.EditorFor(model => model.DataNascimento, new { htmlAttributes = new { @maxlength = "10", @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.DataNascimento, "", new { @class = "text-danger" })
         </div>
     </div>

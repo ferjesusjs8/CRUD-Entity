@@ -15,7 +15,7 @@ namespace CRUD_Entity.Controllers
     {
         private Context db = new Context();
 
-        // == DETALHES ==
+        #region Detalhes
 
         public ActionResult Details(int? id)
         {
@@ -31,14 +31,18 @@ namespace CRUD_Entity.Controllers
             return View(piloto);
         }
 
-        // == CREATE ==
+        #endregion
+
+        #region Create
 
         public ActionResult Create()
         {
             return View();
         }
 
-        // == CREATE POST ==
+        #endregion
+
+        #region Create Post
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -55,7 +59,9 @@ namespace CRUD_Entity.Controllers
             return View(piloto);
         }
 
-        // == EDIT ==
+        #endregion
+
+        #region Edit
 
         public ActionResult Edit(int? id)
         {
@@ -71,7 +77,9 @@ namespace CRUD_Entity.Controllers
             return View(piloto);
         }
 
-        // == EDIT POST ==
+        #endregion
+
+        #region Edit Post
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -86,7 +94,9 @@ namespace CRUD_Entity.Controllers
             return View(piloto);
         }
 
-        // == DELETE ==
+        #endregion
+
+        #region Delete
 
         public ActionResult Delete(int? id)
         {
@@ -102,7 +112,9 @@ namespace CRUD_Entity.Controllers
             return View(piloto);
         }
 
-        // == DELETE POST ==
+        #endregion
+
+        #region Delete Post
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
@@ -115,6 +127,10 @@ namespace CRUD_Entity.Controllers
             return RedirectToAction("Index");
         }
 
+        #endregion
+
+        #region Dispose
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -124,7 +140,9 @@ namespace CRUD_Entity.Controllers
             base.Dispose(disposing);
         }
 
-        // == INDEX ==
+        #endregion
+
+        #region Index
 
         public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
@@ -155,7 +173,8 @@ namespace CRUD_Entity.Controllers
                 pilotos = pilotos.Where(s => s.Nome.Contains(searchString)
                                        || s.RG.Contains(searchString)
                                        || s.NumeroLicenca.Contains(searchString)
-                                       || s.CPFCNPJ.Contains(searchString));
+                                       || s.CPFCNPJ.Contains(searchString)
+                                       || s.DataNascimento.Contains(searchString));
             }
 
             switch (sortOrder)
@@ -225,5 +244,7 @@ namespace CRUD_Entity.Controllers
             int pageNumber = (page ?? 1);
             return View(pilotos.ToPagedList(pageNumber, pageSize));
         }
+
+        #endregion
     }
 }
